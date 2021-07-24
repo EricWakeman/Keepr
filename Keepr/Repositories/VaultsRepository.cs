@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using Dapper;
 using Keepr.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Keepr.Repositories
 {
@@ -68,6 +69,25 @@ namespace Keepr.Repositories
       return _db.Execute(sql, vaultData);
     }
 
+    internal List<Vault> GetProfileVaults(string id)
+    {
+      var sql = @"
+      SELECT * FROM
+      vaults 
+      WHERE creatorId = @id AND isPrivate = false;";
+      List<Vault> vaults = _db.Query<Vault>(sql, new { id }).ToList();
+      return vaults;
+    }
+
+    internal List<Vault> GetUserVaults(string id)
+    {
+      var sql = @"
+      SELECT * FROM
+      vaults 
+      WHERE creatorId = @id;";
+      List<Vault> vaults = _db.Query<Vault>(sql, new { id }).ToList();
+      return vaults;
+    }
 
     internal int DeleteVault(int vaultId)
     {

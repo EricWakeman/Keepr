@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Keepr.Models;
 using Keepr.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -53,6 +54,21 @@ namespace Keepr.Services
         throw new Exception("Failed to update.");
       }
       return vaultData;
+    }
+
+    internal List<Vault> GetProfileVaults(string id)
+    {
+      List<Vault> vaults = _vr.GetProfileVaults(id);
+      return vaults;
+    }
+
+    internal List<Vault> GetUserVaults(string id, string userId)
+    {
+      if (id == userId)
+      {
+        return _vr.GetUserVaults(id);
+      }
+      return _vr.GetProfileVaults(id);
     }
 
     internal Vault GetOnePublic(int id)

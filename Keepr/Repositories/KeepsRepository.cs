@@ -68,6 +68,15 @@ namespace Keepr.Repositories
       return _db.Execute(sql, keepdata);
     }
 
+    internal List<Keep> GetProfileKeeps(string id)
+    {
+      var sql = @"
+      SELECT * FROM
+      keeps 
+      WHERE creatorId = @id; ";
+      return _db.Query<Keep>(sql, new { id }).ToList();
+    }
+
     internal List<Keep> GetAllKeeps()
     {
       var sql = @"

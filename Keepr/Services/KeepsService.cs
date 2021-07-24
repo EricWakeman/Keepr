@@ -56,6 +56,12 @@ namespace Keepr.Services
       return keepdata;
     }
 
+    internal List<Keep> GetProfileKeeps(string id)
+    {
+      List<Keep> keeps = _kr.GetProfileKeeps(id);
+      return keeps;
+    }
+
     internal string DeleteKeep(int keepId, string userId)
     {
       Keep keep = GetOne(keepId);
