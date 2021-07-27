@@ -26,6 +26,7 @@
       <p class="vk-count">
         Keeps
       </p>
+      <img src=".assets/img/plus.png" alt="">
     </div>
     <div class="row">
       <div class="masonry-with-columns pt-3">
@@ -36,7 +37,7 @@
 </template>
 
 <script>
-import { computed, onMounted } from '@vue/runtime-core'
+import { computed, onMounted, reactive } from '@vue/runtime-core'
 import { accountService } from '../services/AccountService'
 import { AppState } from '../AppState'
 import { useRoute } from 'vue-router'
@@ -45,6 +46,7 @@ import { keepsService } from '../services/KeepsService'
 export default {
   setup() {
     const route = useRoute()
+
     onMounted(() => {
       accountService.getProfile(route.params.id)
       vaultsService.getProfileVaults(route.params.id)
@@ -55,7 +57,10 @@ export default {
       activeProfile: computed(() => AppState.activeProfile),
       vaults: computed(() => AppState.vaults),
       keeps: computed(() => AppState.keeps),
-      account: computed(() => AppState.account)
+      account: computed(() => AppState.account),
+      createVault() {
+
+      }
     }
   }
 }

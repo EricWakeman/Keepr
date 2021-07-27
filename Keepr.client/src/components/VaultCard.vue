@@ -14,8 +14,8 @@ export default {
   },
   setup() {
     return {
-      goToVault(){
-        
+      goToVault() {
+        return 'not implemented'
       }
     }
   }
