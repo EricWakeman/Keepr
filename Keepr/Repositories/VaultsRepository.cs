@@ -55,7 +55,8 @@ namespace Keepr.Repositories
         v.Creator = a;
         return v;
       }, new { id }, splitOn: "id").ToList();
-      return vault[0];
+      Vault returnVault = vault[0];
+      return returnVault;
     }
 
     internal int UpdateVault(Vault vaultData)
