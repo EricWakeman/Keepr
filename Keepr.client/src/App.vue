@@ -151,5 +151,8 @@ font-size: 2rem;}
 .user-img{
   height:3rem;
 }
+main{
+  background-color: #fffae9;
+}
 
 </style>

@@ -28,6 +28,11 @@
             Home
           </router-link>
         </li>
+        <li class="nav-item" v-if="user.isAuthenticated">
+          <router-link :to="{ name: 'Profile', params:{ id: account.id }}" class="nav-link bg-dark text-light rounded grow">
+            My Profile
+          </router-link>
+        </li>
       </ul>
       <span class="navbar-text">
         <button
@@ -81,6 +86,7 @@ export default {
     })
     return {
       state,
+      account: computed(() => AppState.account),
       user: computed(() => AppState.user),
       async login() {
         AuthService.loginWithPopup()
@@ -120,5 +126,8 @@ a:hover {
 }
 .grow:hover{
   transform: scale(1.1);
+}
+.nav-item{
+  padding-right: 0.5rem;
 }
 </style>
