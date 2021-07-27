@@ -54,16 +54,16 @@
                                 data-toggle="dropdown"
                                 aria-haspopup="true"
                                 aria-expanded="false"
-                                v-if="user.isAuthenticated && userVaults.lengthe > 0"
+                                v-if="user.isAuthenticated && userVaults.length > 0 && route.name != 'Vault' "
                         >
                           Add to Vault
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" v-for="v in userVaults" :key="v.id" @click="createVaultKeep(v.id, activeKeep.id)">{{ v.name }}</a>
+                          <a class="dropdown-item hoverable" v-for="v in userVaults" :key="v.id" @click="createVaultKeep(v.id, activeKeep.id, v.name)">{{ v.name }}</a>
                         </div>
                       </div>
-                      <img src="../assets/img/trash-can.png" alt="">
-                      <img :src="activeKeep.creator.picture" :alt="activeKeep.creator.name" class="user-img hoverable" @click="goToProfile(activeKeep.creator.id)" data-dismiss="modal">
+                      <img src="./assets/img/trash-can.png" alt="Delete Keep" v-if="account.id == activeKeep.creatorId" class="grow hoverable" @click="deleteKeep(activeKeep.id)">
+                      <img :src="activeKeep.creator.picture" :alt="activeKeep.creator.name" class="user-img hoverable grow" @click="goToProfile(activeKeep.creator.id)" data-dismiss="modal">
                       <span>{{ activeKeep.creator.name }}</span>
                     </div>
                   </div>
@@ -83,19 +83,27 @@ import { AppState } from './AppState'
 import { vaultKeepsService } from './services/VaultKeepsService'
 import Pop from './utils/Notifier'
 import { router } from './router'
+import { keepsService } from './services/KeepsService'
+import $ from 'jquery'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'App',
   setup() {
+    const route = useRoute()
     return {
+      route,
       appState: computed(() => AppState),
+      account: computed(() => AppState.account),
       activeKeep: computed(() => AppState.activeKeep),
       activeVaultKeeps: computed(() => AppState.activeVaultKeeps),
       user: computed(() => AppState.user),
       userVaults: computed(() => AppState.userVaults),
-      createVaultKeep(vId, kId) {
+      createVaultKeep(vId, kId, vName) {
         try {
+          $('.bd-example-modal-lg').modal('toggle')
           vaultKeepsService.createVaultKeep(vId, kId)
+          Pop.toast('Successfully added to ' + vName, 'success')
         } catch (error) {
           Pop.toast(error, 'error')
         }
@@ -104,6 +112,16 @@ export default {
         AppState.vaults = []
         AppState.keeps = []
         router.push({ name: 'Profile', params: { id: id } })
+      },
+      async deleteKeep(id) {
+        $('.bd-example-modal-lg').modal('toggle')
+        try {
+          if (await Pop.confirm()) {
+            await keepsService.deleteKeep(id)
+          }
+        } catch (error) {
+          Pop.toast(error, 'error')
+        }
       }
     }
   }

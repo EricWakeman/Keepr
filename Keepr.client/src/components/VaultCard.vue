@@ -8,14 +8,18 @@
 </template>
 
 <script>
+import { AppState } from '../AppState'
+import { router } from '../router'
 export default {
   props: {
     vault: { type: Object, required: true }
   },
   setup() {
     return {
-      goToVault() {
-        return 'not implemented'
+      goToVault(id) {
+        AppState.vaults = []
+        AppState.keeps = []
+        router.push({ name: 'Vault', params: { id: id } })
       }
     }
   }

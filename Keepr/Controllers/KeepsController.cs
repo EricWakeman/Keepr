@@ -13,11 +13,14 @@ namespace Keepr.Controllers
   public class KeepsController : ControllerBase
   {
     private readonly KeepsService _ks;
+    private readonly VaultKeepsService _vks;
 
-    public KeepsController(KeepsService ks)
+    public KeepsController(KeepsService ks, VaultKeepsService vks)
     {
       _ks = ks;
+      _vks = vks;
     }
+
     [HttpPost]
     [Authorize]
     public async Task<ActionResult<Keep>> CreateKeep([FromBody] Keep keepData)
@@ -54,6 +57,32 @@ namespace Keepr.Controllers
       {
         Keep keep = _ks.GetOne(id);
         return Ok(keep);
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+    [HttpGet("{id}/count")]
+    public ActionResult<List<VaultKeep>> GetKeepCount(int id)
+    {
+      try
+      {
+        List<VaultKeep> vkeeps = _vks.GetActiveVKeeps(id);
+        return Ok(vkeeps);
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+    [HttpGet("{id}/vaultkeeps/{vid}")]
+    public ActionResult<VaultKeep> GetVkByKeepAndVaultId(int id, int vid)
+    {
+      try
+      {
+        VaultKeep vaultK = _vks.GetVkByKeepAndVaultId(id, vid);
+        return Ok(vaultK);
       }
       catch (System.Exception e)
       {

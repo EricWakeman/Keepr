@@ -1,6 +1,6 @@
 <template>
-  <div class="container-fluid">
-    <div class="row" v-if="activeProfile">
+  <div class="container-fluid" v-if="activeProfile">
+    <div class="row">
       <div class="col-3 my-2">
         <img :src="activeProfile.picture" :alt="activeProfile.name" class="profile-img">
       </div>
@@ -18,15 +18,33 @@
       <p class="vk-count">
         Vaults
       </p>
+      <img src="../assets/img/plus.png"
+           alt="Create Vault"
+           class="grow hoverable"
+           data-toggle="modal"
+           data-target="#newVaultForm"
+           type="button"
+           v-if="account.id == activeProfile.id"
+      >
     </div>
-    <div class="row">
+    <div class="row" v-if="activeProfile.id != account.id">
       <VaultCard v-for="v in vaults" :key="v.id" :vault="v" />
+    </div>
+    <div class="row" v-if="activeProfile.id == account.id">
+      <VaultCard v-for="v in userVaults" :key="v.id" :vault="v" />
     </div>
     <div class="row pt-5 pl-3">
       <p class="vk-count">
         Keeps
       </p>
-      <img src=".assets/img/plus.png" alt="">
+      <img src="../assets/img/plus.png"
+           alt="Create Keep"
+           class="grow hoverable"
+           data-toggle="modal"
+           data-target="#newKeepForm"
+           type="button"
+           v-if="account.id == activeProfile.id"
+      >
     </div>
     <div class="row">
       <div class="masonry-with-columns pt-3">
@@ -34,10 +52,12 @@
       </div>
     </div>
   </div>
+  <CreateVault />
+  <CreateKeep />
 </template>
 
 <script>
-import { computed, onMounted, reactive } from '@vue/runtime-core'
+import { computed, onMounted } from '@vue/runtime-core'
 import { accountService } from '../services/AccountService'
 import { AppState } from '../AppState'
 import { useRoute } from 'vue-router'
@@ -58,9 +78,8 @@ export default {
       vaults: computed(() => AppState.vaults),
       keeps: computed(() => AppState.keeps),
       account: computed(() => AppState.account),
-      createVault() {
+      userVaults: computed(() => AppState.userVaults)
 
-      }
     }
   }
 }
@@ -96,10 +115,7 @@ export default {
     font-family: system-ui;
     font-weight: 900;
     font-size: 2rem;
-    > img{
-    height: 200px;
-    width: 200px;
-  }
+
   }
 
 }

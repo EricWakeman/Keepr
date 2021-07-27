@@ -1,4 +1,3 @@
-import Masonry from 'masonry-layout'
 import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
@@ -17,7 +16,8 @@ class KeepsService {
   }
 
   async getKeepsByVaultId(id) {
-    const res = await api.get('/api/vaults/' + id)
+    const res = await api.get('/api/vaults/' + id + '/keeps')
+    logger.log(res.data)
     AppState.keeps = res.data
   }
 
@@ -35,8 +35,11 @@ class KeepsService {
   async updateKeepViews(keepdata) {
     keepdata.views += 1
     const res = await api.put('api/keeps', keepdata)
+    const vKs = await api.get('api/keeps/' + keepdata.id + '/count')
     logger.log(res)
     AppState.activeKeep = res.data
+    AppState.activeVaultKeeps = vKs.data
+    logger.log(vKs)
   }
 
   async deleteKeep(id) {

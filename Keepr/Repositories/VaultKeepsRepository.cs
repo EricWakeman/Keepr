@@ -87,5 +87,16 @@ namespace Keepr.Repositories
       WHERE id = @vkId;";
       return _db.QueryFirstOrDefault<VaultKeep>(sql, new { vkId });
     }
+
+    internal VaultKeep GetVkByKeepAndVaultId(VaultKeep vk)
+    {
+      var sql = @"
+      SELECT * FROM
+      vaultkeeps
+      WHERE keepId = @KeepId
+      AND vaultId = @VaultId;";
+      return _db.QueryFirstOrDefault<VaultKeep>(sql, vk);
+
+    }
   }
 }

@@ -5,12 +5,13 @@ import { api } from './AxiosService'
 class VaultsService {
   async createVault(vaultData) {
     const res = await api.post('/api/vaults', vaultData)
-    AppState.vaults.push(res.data)
+    AppState.userVaults.push(res.data)
   }
 
   async getVaultById(id) {
     const res = await api.get('/api/vaults/' + id)
     AppState.activeVault = res.data
+    logger.log(res.data)
   }
 
   async getUserVaults(id) {

@@ -67,6 +67,15 @@ namespace Keepr.Services
       return "Successfully deleted.";
     }
 
+    internal VaultKeep GetVkByKeepAndVaultId(int id, int vid)
+    {
+      VaultKeep vk = new VaultKeep();
+      vk.KeepId = id;
+      vk.VaultId = vid;
+      VaultKeep vaultKeep = _vkr.GetVkByKeepAndVaultId(vk);
+      return vaultKeep;
+    }
+
     internal ActionResult<List<VaultKeepViewModel>> GetVKeepsPublic(int id)
     {
       Vault vault = _vr.GetOne(id);

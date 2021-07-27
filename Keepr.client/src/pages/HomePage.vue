@@ -1,5 +1,5 @@
 <template>
-  <div class="masonry-with-columns pt-3">
+  <div class="masonry-with-columns pt-3" v-if="keeps.length > 0">
     <KeepCard v-for="k in keeps" :key="k.id" :keep="k" />
   </div>
 </template>
