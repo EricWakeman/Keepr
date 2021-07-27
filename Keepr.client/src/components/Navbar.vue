@@ -6,6 +6,7 @@
           alt="logo"
           src="../assets/img/orange.png"
           height="45"
+          class="grow"
         />
       </div>
     </router-link>
@@ -23,7 +24,7 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link :to="{ name: 'Home' }" class="nav-link">
+          <router-link :to="{ name: 'Home' }" class="nav-link bg-dark text-light rounded grow">
             Home
           </router-link>
         </li>
@@ -46,20 +47,16 @@
               :src="user.picture"
               alt="user photo"
               height="40"
-              class="rounded"
+              class="rounded  grow hoverable"
             />
-            <span class="mx-3">{{ user.name }}</span>
+            <span class="mx-3 bg-dark rounded text-light hoverable">{{ user.name }}</span>
           </div>
           <div
-            class="dropdown-menu p-0 list-group w-100"
+            class="dropdown-menu p-0 list-group w-100 hoverable"
             :class="{ show: state.dropOpen }"
             @click="state.dropOpen = false"
           >
-            <router-link :to="{ name: 'Account' }">
-              <div class="list-group-item list-group-item-action hoverable">
-                Account
-              </div>
-            </router-link>
+
             <div
               class="list-group-item list-group-item-action hoverable"
               @click="logout"
@@ -117,5 +114,11 @@ a:hover {
 }
 .nav-item .nav-link.router-link-exact-active{
   color: var(--primary);
+}
+.grow{
+  transition: all .25s linear;
+}
+.grow:hover{
+  transform: scale(1.1);
 }
 </style>

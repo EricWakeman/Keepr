@@ -61,6 +61,15 @@ namespace Keepr.Repositories
 
     }
 
+    internal List<VaultKeep> GetActiveVKeeps(int id)
+    {
+      var sql = @"
+      SELECT * FROM 
+      vaultkeeps
+      WHERE keepId = @id;";
+      return _db.Query<VaultKeep>(sql, new { id }).ToList();
+    }
+
     internal int Delete(int vkId)
     {
       var sql = @"

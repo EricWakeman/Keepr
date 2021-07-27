@@ -60,6 +60,19 @@ namespace Keepr.Controllers
         return BadRequest(e.Message);
       }
     }
+    [HttpPut]
+    public ActionResult<Keep> UpdateKeepViews([FromBody] Keep keepData)
+    {
+      try
+      {
+        Keep keep = _ks.UpdateKeepViews(keepData);
+        return Ok(keep);
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
     [HttpPut("{id}")]
     [Authorize]
     public async Task<ActionResult<Keep>> UpdateKeep([FromBody] Keep keepdata, int id)

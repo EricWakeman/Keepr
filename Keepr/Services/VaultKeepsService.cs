@@ -32,6 +32,12 @@ namespace Keepr.Services
 
     }
 
+    internal List<VaultKeep> GetActiveVKeeps(int id)
+    {
+      List<VaultKeep> vkeeps = _vkr.GetActiveVKeeps(id);
+      return vkeeps;
+    }
+
     internal List<VaultKeepViewModel> GetVKeeps(int id, string userId)
     {
       Vault vault = _vr.GetOne(id);

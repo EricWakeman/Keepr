@@ -76,5 +76,21 @@ namespace Keepr.Services
       }
       return "Successfully deleted.";
     }
+
+    internal Keep UpdateKeepViews(Keep keepData)
+    {
+      int updated = _kr.UpdateKeepViews(keepData);
+      if (updated != 1)
+      {
+        throw new Exception("Failed to updated.");
+      }
+      Keep original = _kr.GetOne(keepData.Id);
+      keepData.Creator = original.Creator;
+      keepData.CreatorId = original.CreatorId;
+      keepData.Description = original.Description;
+      keepData.Name = original.Name;
+      keepData.Img = original.Img;
+      return keepData;
+    }
   }
 }

@@ -28,8 +28,7 @@ namespace Keepr.Controllers
     {
       try
       {
-        string email = _aserv.GetProfileEmailById(id);
-        Account profile = _aserv.GetProfileByEmail(email);
+        Account profile = _aserv.GetById(id);
         return Ok(profile);
       }
       catch (System.Exception e)

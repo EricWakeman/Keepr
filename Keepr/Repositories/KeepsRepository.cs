@@ -93,6 +93,17 @@ namespace Keepr.Repositories
       return keeps;
     }
 
+    internal int UpdateKeepViews(Keep keepData)
+    {
+      var sql = @"
+      UPDATE keeps
+      SET 
+      views = @Views
+      WHERE id = @Id;";
+      return _db.Execute(sql, keepData);
+
+    }
+
     internal int DeleteKeep(int keepId)
     {
       var sql = @"
