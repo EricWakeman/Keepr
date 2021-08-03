@@ -32,7 +32,7 @@ jobs:
       # dotnet build and publish
       - name: dotnet publish
         run: |
-          dotnet publish -c Release
+          dotnet publish ./Keepr -c Release
 
       - name: Build, Push and Release a Docker container to Heroku.
         uses: gonuit/heroku-docker-deploy@v1.3.3
@@ -44,4 +44,4 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           # Name of the heroku application to which the build is to be sent.
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-          dockerfile_directory: ./
+          dockerfile_directory: ./Keepr/dockerfile
